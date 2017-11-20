@@ -25,7 +25,6 @@ public class TeacherTest {
      * 03.Transaction ：事务的管理
      * 04.Query  ：   sql ,hql
      * 05.Criteria  ：  完全面向对象！
-     *
      */
     @Test
     public  void addTeacher(){
@@ -39,15 +38,17 @@ public class TeacherTest {
         Transaction transaction = session.beginTransaction();
         //05.创建新增的对象
         Teacher teacher=new Teacher();
-        teacher.setId(4);
-        teacher.setName("小白");
+        teacher.setId(1);
+        teacher.setName("小白1");
         //06.持久化操作
-        session.save(teacher);
+        System.out.println("******************************");
+        session.save(teacher);   //identity产生sql语句
         System.out.println("******************************");
         //07.提交事务
-        transaction.commit();  //  产生sql语句
+        transaction.commit();  //  assigned 产生sql语句
         //08.关闭会话
         session.close();
+        factory.close();
     }
 
 
