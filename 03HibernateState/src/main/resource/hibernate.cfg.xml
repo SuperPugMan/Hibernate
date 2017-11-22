@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!--配置连接数据库的四要素-->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/t17</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password"></property>
+
+        <!--是否显示底层生成的sql语句-->
+        <property name="hibernate.show_sql">true</property>
+        <!--是否格式化sql语句-->
+        <property name="hibernate.format_sql">true</property>
+        <!--hbm2ddl   就是把xx.hbm.xml文件中的配置生成数据库中DDL（数据定义语言）
+        create:  每次运行都会删除 上次生成的表,还会创建新的！
+        update: 没有表会自动创建，有表就增加数据！
+        validate: 如果hbm文件和数据库中的字段对应 就会新增，
+                  否则抛出异常！
+       create-drop:  每次运行都会删除 上次生成的表,前提是sessionFactory关闭
+        -->
+        <property name="hbm2ddl.auto">
+
+        </property>
+
+
+
+        <!--加载需要的hbm.xml文件-->
+         <mapping resource="com/xdf/bean/Teacher.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>
