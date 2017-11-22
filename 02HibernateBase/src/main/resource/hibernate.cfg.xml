@@ -21,7 +21,9 @@
                   否则抛出异常！
        create-drop:  每次运行都会删除 上次生成的表,前提是sessionFactory关闭
         -->
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">
+
+        </property>
 
 
 
