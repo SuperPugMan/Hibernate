@@ -9,6 +9,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.sound.midi.Soundbank;
+
 public class TeacherTest {
 
 
@@ -117,8 +119,157 @@ public class TeacherTest {
     public   void  addTeacher5(){
         Teacher  teacher= (Teacher) session.get(Teacher.class,1); //持久化状态
         teacher.setName("哈哈哈哈");
+        /**
+         * 因为teacher已经是持久态  所以不需要save或者update
+         */
         transaction.commit();
     }
+
+
+    /**
+     * saveOrUpdate（）
+     * 验证一：
+     *    数据在数据库不存在，
+     *    saveOrUpdate（） 01.先产生select
+     *                     02.insert
+     */
+    @Test
+    public  void test06(){
+        Teacher  teacher=new Teacher(4,"老师4"); //瞬时态
+        session.saveOrUpdate(teacher); //持久态
+        System.out.println("=============================================");
+        transaction.commit();
+  }
+
+    /**
+     * saveOrUpdate（）
+     * 验证二：
+     *    数据在数据库存在，
+     *    saveOrUpdate（） 01.先产生select语句根据id查询
+     *                   如果修改了对象的属性
+     *                   02.产生update语句
+     */
+    @Test
+    public  void test07(){
+        Teacher  teacher=new Teacher(4,"老师哈哈哈"); //瞬时态
+        session.saveOrUpdate(teacher); //持久态
+        System.out.println("=============================================");
+        transaction.commit();
+    }
+
+
+    /**
+     *   saveOrUpdate（）：
+     *     数据库中没有对应的数据，
+     *     然后更改了数据的属性！
+     *     01.select
+     *     02.insert
+     *     03.update
+     */
+    @Test
+    public  void test08(){
+        Teacher  teacher=new Teacher(4,"老师4"); //瞬时态
+        session.saveOrUpdate(teacher); //持久态
+        teacher.setName("老师5");
+        System.out.println("=============================================");
+        transaction.commit();
+    }
+    /**
+     *   merge
+     *   验证一：
+     *   数据库没有对应的数据
+     *     01.select语句
+     *     02.insert
+     */
+    @Test
+    public  void test09(){
+        Teacher  teacher=new Teacher(4,"老师4"); //瞬时态
+        session.merge(teacher);
+        transaction.commit();
+    }
+
+    /**
+     *   merge
+     *   验证二：
+     *   数据库有对应的数据
+     *       只有一条select语句
+     */
+    @Test
+    public  void test10(){
+        Teacher  teacher=new Teacher(4,"老师4"); //瞬时态
+        session.merge(teacher);
+        transaction.commit();
+    }
+
+    /**
+     *   merge
+     *   验证三：
+     *   数据库有对应的数据，但是对数据进行修改
+     *       只有一条select语句
+     *       01.select
+     *       02.update
+     */
+    @Test
+    public  void test11(){
+        Teacher  teacher=new Teacher(4,"老师5"); //瞬时态
+        session.merge(teacher);
+        transaction.commit();
+    }
+    /**
+     *   merge
+     *   验证四：
+     *   数据库没有对应的数据，创建对象之后 对数据进行修改
+     *       01.select
+     *       02.insert
+     */
+    @Test
+    public  void test12(){
+        Teacher  teacher=new Teacher(4,"老师4"); //瞬时态
+        session.merge(teacher);
+        teacher.setName("老师5");
+        transaction.commit();
+    }
+    /**
+     *   merge
+     *   验证五：
+     *     不会改变对象的状态
+     */
+    @Test
+    public  void test13(){
+        Teacher  teacher=new Teacher(4,"老师4"); //瞬时态
+        session.merge(teacher);  //不会改变对象的状态
+        teacher.setName("老师5");  //瞬时态
+        session.update(teacher); //报错
+        teacher.setName("老");
+        transaction.commit();
+    }
+
+    /**
+     *
+     * 瞬时态和游离态的区别就是是否拥有OID！
+     * OID怎么来的？只要曾经被session管理过的对象都有OID！
+     *
+     *  save():   把瞬时态转换成持久态
+     *  update(): 把游离态转换成持久态
+     *  saveOrUpdate():
+     *         会根据对象是否有OID来判断执行save还是update
+     *           如果有oid  执行update
+     *           如果没有oid  执行save
+     *  merge()： 产生的sql语句和saveOrUpdate有点类似，
+     *            但是！！！！！
+     *            01.merge不会改变对象的状态
+     *            02.当我们的对象处于瞬时状态时，会将对象复制一份到session的缓存中，
+     *              然后执行save方法，执行insert
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+
+
 
 
 
