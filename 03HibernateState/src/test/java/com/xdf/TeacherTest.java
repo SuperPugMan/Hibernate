@@ -260,18 +260,72 @@ public class TeacherTest {
      *            01.merge不会改变对象的状态
      *            02.当我们的对象处于瞬时状态时，会将对象复制一份到session的缓存中，
      *              然后执行save方法，执行insert
-     *
-     *
-     *
-     *
-     *
-     *
-     *
      */
 
 
+    /**
+     *  数据在数据库中不存在
+     */
+    @Test
+    public   void  test14(){
+      Teacher  teacher=new Teacher(4,"哈哈哈");//瞬时状态
+        session.save(teacher);  //持久态
+        session.evict(teacher);  // 游离态
+        session.update(teacher);  // 持久态
+        transaction.commit();
+    }
+
+    /**
+     *  数据在数据库中不存在
+     */
+    @Test
+    public   void  test15(){
+      Teacher  teacher=new Teacher(4,"哈哈哈");//瞬时状态
+        session.merge(teacher); //瞬时状态
+        session.evict(teacher);// 把持久化状态转换成游离态   瞬时状态
+        session.update(teacher);// 把游离态转换成持久化状态  瞬时状态
+        transaction.commit();
+    }
 
 
+
+    /**
+     *  数据在数据库中存在！会把id  转换成 oid 让这个对象变成游离态
+     */
+    @Test
+    public   void  test16(){
+        Teacher  teacher=new Teacher(4,"哈哈哈");//游离态
+        session.update(teacher); // 把游离态转换成持久化状态   update语句
+        transaction.commit();
+    }
+
+    @Test
+    public   void  test17(){
+        Teacher  teacher=new Teacher(5,"哈哈哈55");//瞬时状态
+        session.save(teacher); // 把瞬时状态转换成持久化状态   insert语句
+        transaction.commit();
+    }
+
+
+    /**
+     *  数据在数据库中不存在！
+     */
+    @Test
+    public   void  test18(){
+        Teacher  teacher=new Teacher(4,"哈哈哈");//瞬时状态
+        session.update(teacher); // 把游离态转换成持久化状态     报错
+        transaction.commit();
+    }
+
+    /**
+     *
+     */
+    @Test
+    public   void  test19(){
+        Teacher  teacher=new Teacher(3,"哈哈哈");//游离状态
+        session.update(teacher); // 把游离态转换成持久化状态
+        transaction.commit();
+    }
 
 
 

@@ -32,6 +32,7 @@ id节点：  表中的主键
         <id name="id" column="id">
            <generator class="assigned"/>
         </id>
+
         <property name="name"/>
 
     </class>
