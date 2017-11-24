@@ -12,6 +12,8 @@
         </id>
 
         <property name="name"/>
+        <property name="address"/>
+        <property name="sal"/>
 
     </class>
 

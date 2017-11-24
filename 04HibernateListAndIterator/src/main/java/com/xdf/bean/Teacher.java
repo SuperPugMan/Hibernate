@@ -6,6 +6,29 @@ package com.xdf.bean;
 public class Teacher {
     private  Integer id; //教师编号
     private  String name; //教师姓名
+    private  String address; //教师住址
+    private  double sal; //教师薪水
+
+    public Teacher(String name, double sal) {
+        this.name = name;
+        this.sal = sal;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public double getSal() {
+        return sal;
+    }
+
+    public void setSal(double sal) {
+        this.sal = sal;
+    }
 
     public Teacher() {
     }
@@ -36,6 +59,15 @@ public class Teacher {
         return "Teacher{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", sal=" + sal +
                 '}';
+    }
+
+    public Teacher(Integer id, String name, String address, double sal) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.sal = sal;
     }
 }
