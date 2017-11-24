@@ -326,10 +326,8 @@ public class TeacherTest {
 
     /**
      * commit 和flush的区别
-     *
      * 相同点：
      *     都会同步到数据库！
-     *
      * 不同点：
      *   commit:提交数据到数据库，会永久保存
      *   flush: 暂时保存，不一定会持久化！
