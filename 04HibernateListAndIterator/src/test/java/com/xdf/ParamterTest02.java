@@ -173,14 +173,32 @@ public class ParamterTest02 {
 
     /**
      * 分页
+     *
+     * 01.查询总记录数
+     * 02.每页显示的数据
+     * 03.总页数
      */
     @Test
     public  void  test08(){
-        String hql="select  new Teacher(name,sal) from  Teacher";
-       List<Teacher> list= session.createQuery(hql).list();
-       for (Teacher  t:list){
-           System.out.println(t);
-       }
+        //查询总记录数
+        String  hql="select  count(*) from  Teacher";  // 会返回Long
+        int counts= ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        //页大小
+        int pageSize=2;
+        //总页数
+        int totalPages=(counts%pageSize==0)?(counts/pageSize):(counts/pageSize+1);
+        // 显示第2页的内容
+        int  pageIndex=3;
+        hql="from Teacher";
+        Query query= session.createQuery(hql);
+        //设置从那一条数据开始查询
+        query.setFirstResult((pageIndex-1)*pageSize);
+        //设置页大小
+        query.setMaxResults(pageSize);
+        List<Teacher> teachers=query.list();
+        for (Teacher t:teachers){
+            System.out.println(t);
+        }
     }
 
 
