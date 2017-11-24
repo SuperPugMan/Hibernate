@@ -317,14 +317,57 @@ public class TeacherTest {
         transaction.commit();
     }
 
-    /**
-     *
-     */
     @Test
     public   void  test19(){
         Teacher  teacher=new Teacher(3,"哈哈哈");//游离状态
         session.update(teacher); // 把游离态转换成持久化状态
         transaction.commit();
+    }
+
+    /**
+     * commit 和flush的区别
+     *
+     * 相同点：
+     *     都会同步到数据库！
+     *
+     * 不同点：
+     *   commit:提交数据到数据库，会永久保存
+     *   flush: 暂时保存，不一定会持久化！
+     *
+     *   commit在执行的时候，默认回执行flush操作，
+     *   在执行flush的时候会清理缓存，
+     *   清理缓存的时候执行脏检查！
+     *
+     *   脏检查：
+     *      在我们的对象被session管理的时候，
+     *      session会在缓存中创建对象的一个副本（快照）来保存对象现在的一种状态！
+     *      在清理缓存的时候会拿现在的对象状态和之前的副本进行比较，
+     *      如果现在的对象属性发生了变化，这个对象就是脏对象！
+     *      flush会把脏对象同步到数据库。
+     *      如果没有commit，数据只是暂时的保存在数据库中！
+     *      之后commit才能永久保存！
+     */
+
+    @Test
+    public void  test20(){
+     //从数据库中获取id为1的老师信息
+     Teacher teacher= (Teacher) session.get(Teacher.class,1); //持久态
+     teacher.setName("小黑");  //如果删除这条语句 就不会出现update  证明没有脏对象
+     System.out.println("**********************");
+     session.flush();  //产生了update语句  证明同步到了数据库
+  }
+
+
+    @Test
+    public void  test21(){
+        //从数据库中获取id为1的老师信息
+        Teacher teacher= (Teacher) session.get(Teacher.class,1); //持久态
+        teacher.setName("小黑");  //如果删除这条语句 就不会出现update  证明没有脏对象
+        System.out.println("**********************");
+        session.flush();  //产生了update语句  证明同步到了数据库
+        session.evict(teacher);  //清除指定对象 证明我们的数据不是来自缓存
+        Teacher teacher2= (Teacher) session.get(Teacher.class,1); //持久态
+        System.out.println(teacher2.getName());
     }
 
 
