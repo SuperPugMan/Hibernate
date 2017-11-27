@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 街道 对应的  映射文件-->
+<hibernate-mapping package="com.xdf.bean">
+
+
+    <class name="Street">
+        <id name="id" column="id">
+           <generator class="assigned"/>
+        </id>
+        <property name="name"/>
+        <!--配置多对一的关联关系
+        name: 本类中 关联关系的属性名
+        class：关联关系的类型
+        column：在数据库中两个表的外键
+        -->
+        <many-to-one  name="district" class="District" column="districtId"/>
+    </class>
+
+</hibernate-mapping>

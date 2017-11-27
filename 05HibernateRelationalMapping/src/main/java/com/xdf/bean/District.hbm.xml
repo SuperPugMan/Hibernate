@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 区县 对应的  映射文件-->
+<hibernate-mapping package="com.xdf.bean">
+
+
+    <class name="District">
+        <id name="id" column="id">
+           <generator class="assigned"/>
+        </id>
+        <property name="name"/>
+        <!-- 配置一对多的关联管理
+        name:关联关系属性名
+        column：数据库中对应的外键
+        class：关联关系的类型
+        cascade：对当前对象操作的时候，是否影响关联对象
+        inverse="true"： 放弃与数据库的交互
+        -->
+        <bag name="streets" cascade="all" inverse="true">
+            <key column="districtId"/>
+            <one-to-many class="Street"/>
+        </bag>
+    </class>
+
+</hibernate-mapping>
