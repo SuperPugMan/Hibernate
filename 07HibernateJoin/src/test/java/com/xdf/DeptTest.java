@@ -142,7 +142,7 @@ public class DeptTest {
      *     有可能部门下面没有员工，返回null!
      *
      * 03.form  Dept d  left join fetch  ???? d.emps????
-     *   emps??是集合！！
+     *   emps??集合？？
      */
 
 

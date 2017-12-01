@@ -17,4 +17,38 @@
         <many-to-one name="dept" column="deptNo" class="Dept"/>
      </class>
 
+    <!-- HQL命名查询-->
+    <query name="getAllEmps">
+        <![CDATA[
+                 from  Emp
+          ]]>
+    </query>
+
+    <!--SQL命名查询   返回的是一个Object数据-->
+    <sql-query name="getAllEmpsBySql">
+         <![CDATA[
+              select * from emp
+          ]]>
+    </sql-query>
+
+    <!--查询中携带条件-->
+    <sql-query name="getEmpById">
+         <![CDATA[
+              select * from emp where  empId=:id
+          ]]>
+    </sql-query>
+
+   <!--查询返回一个对象-->
+    <sql-query name="getEmpObject">
+        <return-scalar column="empId"/>
+        <return-scalar column="name"/>
+        <return-scalar column="sal"/>
+        <return-scalar column="job"/>
+
+        <![CDATA[
+              select empId,name,sal,job from emp where  empId=:id
+          ]]>
+    </sql-query>
+
+
 </hibernate-mapping>
