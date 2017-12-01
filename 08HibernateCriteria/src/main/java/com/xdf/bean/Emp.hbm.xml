@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 员工 对应的  映射文件-->
+<hibernate-mapping package="com.xdf.bean">
+
+
+    <class name="Emp">
+        <id name="empId" column="empId">
+           <generator class="assigned"/>
+        </id>
+        <property name="name"/>
+        <property name="sal"/>
+        <property name="job"/>
+        <!--多个员工属于一个部门-->
+        <many-to-one name="dept" column="deptNo" class="Dept"/>
+     </class>
+
+
+</hibernate-mapping>

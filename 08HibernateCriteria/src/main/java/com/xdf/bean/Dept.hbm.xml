@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 员工 对应的  映射文件-->
+<hibernate-mapping package="com.xdf.bean">
+
+
+    <class name="Dept">
+        <id name="deptId" column="deptId">
+           <generator class="assigned"/>
+        </id>
+        <property name="name"/>
+        <property name="location"/>
+
+        <!--一个部门对应多个员工-->
+        <set name="emps" cascade="all" inverse="true">
+            <key column="deptNo"></key>
+            <one-to-many class="Emp"/>
+        </set>
+    </class>
+
+</hibernate-mapping>
