@@ -8,6 +8,13 @@
 
     <class name="Dept">
 
+        <!--配置使用2级缓存的策略
+        usage：使用的缓存清理策略
+        include：是否缓存延迟加载的对象
+               01.all:缓存所有对象
+               02.non-lazy:不缓存延迟加载的对象
+        -->
+        <cache usage="read-only"/>
 
 
         <id name="deptId" column="deptId">

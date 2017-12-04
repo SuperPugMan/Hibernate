@@ -6,21 +6,16 @@
 <hibernate-mapping package="com.xdf.bean">
 
 
-    <class name="Dept">
-
-
-
-        <id name="deptId" column="deptId">
+    <class name="Emp">
+        <id name="empId" column="empId">
            <generator class="assigned"/>
         </id>
         <property name="name"/>
-        <property name="location"/>
+        <property name="sal"/>
+        <property name="job"/>
+        <!--多个员工属于一个部门-->
+        <many-to-one name="dept" column="deptNo" class="Dept"/>
+     </class>
 
-        <!--一个部门对应多个员工-->
-        <set name="emps" cascade="all" inverse="true">
-            <key column="deptNo"></key>
-            <one-to-many class="Emp"/>
-        </set>
-    </class>
 
 </hibernate-mapping>
