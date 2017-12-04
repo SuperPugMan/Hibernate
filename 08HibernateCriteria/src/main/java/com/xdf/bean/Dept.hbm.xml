@@ -7,9 +7,6 @@
 
 
     <class name="Dept">
-
-
-
         <id name="deptId" column="deptId">
            <generator class="assigned"/>
         </id>
